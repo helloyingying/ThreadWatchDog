@@ -1,4 +1,4 @@
-package com.android.liuzhuang.threadwatchdog;
+package com.android.liuzhuang.threadwatchdog.utils;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.util.Log;
 public class LogUtil {
 
     public static boolean isShow(){
-        return BuildConfig.DEBUG;
+        return false;
     }
 
     public static boolean isShow(Object msg){

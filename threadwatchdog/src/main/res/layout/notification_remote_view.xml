@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Thread Watch Dog"
         android:textSize="16sp"
-        android:textColor="#666666"
+        android:textColor="#333333"
         android:layout_toRightOf="@id/noti_icon"
         android:layout_marginLeft="9dp"
         android:layout_marginTop="9dp"
@@ -30,7 +30,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:layout_margin="9dp"
-        android:textColor="#999999"
+        android:textColor="#666666"
         android:textSize="14sp"
         android:id="@+id/noti_info"/>
 

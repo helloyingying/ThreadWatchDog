@@ -1,12 +1,16 @@
 package com.android.liuzhuang.threadwatchdog;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v7.app.NotificationCompat;
 import android.widget.RemoteViews;
+
+import com.android.liuzhuang.threadwatchdog.core.ThreadDumper;
+import com.android.liuzhuang.threadwatchdog.ui.ThreadWatchDogActivity;
+import com.android.liuzhuang.threadwatchdog.utils.LogUtil;
 
 import java.util.List;
 
@@ -30,14 +34,21 @@ public class ThreadWatchDogService extends Service implements ThreadDumper.DumpC
     @Override
     public void onCreate() {
         super.onCreate();
-        remoteViews = new RemoteViews(getPackageName(), R.layout.notification_remote_view);
-        ThreadDumper.getInstance().registerDumpCallback(this).startLooper(1000);
         LogUtil.d(TAG, "onCreate");
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        LogUtil.d(TAG, "onStartCommand");
+        remoteViews = new RemoteViews(getPackageName(), R.layout.notification_remote_view);
+        ThreadDumper.getInstance().registerLooperDumpCallback(this).startLooper(1000);
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        ThreadDumper.getInstance().unregisterDumpCallback(this);
         ThreadDumper.getInstance().stopLooper();
         if (notificationManager != null) {
             notificationManager.cancel(notifyId);
@@ -50,7 +61,7 @@ public class ThreadWatchDogService extends Service implements ThreadDumper.DumpC
             return;
         }
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        Notification.Builder builder = new Notification.Builder(this);
 
         Intent jumpIntent = new Intent(this, ThreadWatchDogActivity.class);
         PendingIntent jumpPendingIntent = PendingIntent.getActivity(this, 0,
@@ -67,13 +78,13 @@ public class ThreadWatchDogService extends Service implements ThreadDumper.DumpC
                 .setOngoing(true)
                 .setContentIntent(jumpPendingIntent)
                 .setSmallIcon(R.drawable.small_icon)
-                .setPriority(NotificationCompat.PRIORITY_MIN);
+                .setPriority(Notification.PRIORITY_MIN);
 
         notificationManager.notify(notifyId, builder.build());
     }
 
     @Override
-    public void dumpFinish(List<Thread> threads) {
+    public void onDumpFinish(List<Thread> threads) {
         if (threads != null && !threads.isEmpty()) {
             showNotification(threads.size());
         }

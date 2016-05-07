@@ -1,4 +1,4 @@
-package com.android.liuzhuang.threadwatchdog;
+package com.android.liuzhuang.threadwatchdog.utils;
 
 import android.os.Handler;
 import android.os.HandlerThread;

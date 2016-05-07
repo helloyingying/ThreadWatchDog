@@ -1,0 +1,51 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.android.liuzhuang.threadwatchdog.ui.ThreadWatchDogActivity">
+    <item
+        android:id="@+id/all_thread"
+        android:orderInCategory="100"
+        android:title="All Threads"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/no_daemon"
+        android:orderInCategory="100"
+        android:title="No Daemon Threads"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/new_thread"
+        android:orderInCategory="100"
+        android:title="New Threads"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/runnable"
+        android:orderInCategory="100"
+        android:title="Running Threads"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/blocked"
+        android:orderInCategory="100"
+        android:title="Blocked Threads"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/waiting"
+        android:orderInCategory="100"
+        android:title="Waiting Threads"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/timed_waiting"
+        android:orderInCategory="100"
+        android:title="Timed Waiting Threads"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/terminated"
+        android:orderInCategory="100"
+        android:title="Terminated Threads"
+        android:showAsAction="never"/>
+</menu>

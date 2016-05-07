@@ -11,7 +11,8 @@
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".ThreadWatchDogActivity" />
+        <activity android:name=".ui.ThreadWatchDogActivity"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
 
         <receiver
             android:name=".ThreadWatchDogReceiver"
