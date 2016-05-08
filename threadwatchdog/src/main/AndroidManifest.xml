@@ -11,8 +11,9 @@
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".ui.ThreadWatchDogActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
+        <activity
+            android:name=".ui.ThreadWatchDogActivity"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
         <receiver
             android:name=".ThreadWatchDogReceiver"
@@ -22,6 +23,9 @@
                 <action android:name="THREAD_WATCH_DOG_CLOSE" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ui.ThreadDetailActivity"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
     </application>
 
 </manifest>

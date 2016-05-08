@@ -1,6 +1,7 @@
 package com.android.liuzhuang.threadwatchdog.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.liuzhuang.threadwatchdog.R;
+import com.android.liuzhuang.threadwatchdog.ui.ThreadDetailActivity;
 import com.android.liuzhuang.threadwatchdog.utils.StackUtil;
 
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ public class ThreadListAdapter extends BaseAdapter {
         ThreadViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.thread_card, parent, false);
-            holder = new ThreadViewHolder(convertView);
+            holder = new ThreadViewHolder(convertView, context);
             convertView.setTag(holder);
         } else {
             holder = (ThreadViewHolder) convertView.getTag();
@@ -71,15 +73,29 @@ public class ThreadListAdapter extends BaseAdapter {
     public static class ThreadViewHolder {
         private TextView title;
         private TextView detail;
-        public ThreadViewHolder(View itemView) {
+        private View itemView;
+        private Context context;
+        public ThreadViewHolder(View itemView,Context context) {
+            this.context = context;
+            this.itemView = itemView;
             title = (TextView) itemView.findViewById(R.id.card_title);
             detail = (TextView) itemView.findViewById(R.id.card_detail);
         }
 
-        public void refresh(Thread thread) {
+        public void refresh(final Thread thread) {
             if (thread != null) {
                 title.setText(thread.getName());
-                detail.setText(StackUtil.getStackTrace(thread));
+                final String stackStr = StackUtil.getStackTrace(thread);
+                detail.setText(stackStr);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ThreadDetailActivity.class);
+                        intent.putExtra(ThreadDetailActivity.EXTRA_KEY_TITLE, thread.getName());
+                        intent.putExtra(ThreadDetailActivity.EXTRA_KEY_STACK, stackStr);
+                        context.startActivity(intent);
+                    }
+                });
             }
         }
     }
